@@ -11,7 +11,7 @@
                             <div class="card-header text-white bg-info">
                                 <p class="card-text" style="height:20px">
                                     @item.Name
-                                    <a class="text-white float-end" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                    <a class="text-white float-end" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
                                 </p>
 
                             </div>
@@ -63,5 +63,6 @@
         }
 
     </div>
+    @await Html.PartialAsync("_CreateItem", "Movies")
 </div>
 

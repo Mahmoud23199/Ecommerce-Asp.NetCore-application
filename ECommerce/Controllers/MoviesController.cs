@@ -58,7 +58,7 @@ namespace ECommerce.Controllers
                 return NotFound();
             }
 
-
+            ViewBag.Actors = await unitOfWork.ActorMoviess.GetAllAsyncActorsWithMovie(i => i.Movie.Id == id, new[] { "Actor" });
             return View(movie);
         }
 
@@ -67,6 +67,8 @@ namespace ECommerce.Controllers
         {
             ViewData["CinemaId"] = new SelectList(await unitOfWork.Cinemas.GetAllAsync(null), "Id", "Name");
             ViewData["ProducerId"] = new SelectList(await unitOfWork.Producers.GetAllAsync(null), "Id", "FullName");
+            ViewData["Actors"] = await unitOfWork.Actors.GetAllAsync(null);
+
             return View();
         }
 
@@ -74,12 +76,12 @@ namespace ECommerce.Controllers
         //// POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,StartDate,EndDate,Price,MovieCategory,CinemaId,ProducerId")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,StartDate,EndDate,Price,MovieCategory,CinemaId,ProducerId")] Movie movie, int[]? selectedActors)
         {
             if (ModelState.IsValid)
             {
-               await unitOfWork.Movies.AddAsync(movie);
-                
+                await unitOfWork.Movies.AddAsync(movie);
+                await unitOfWork.Movies.AddAsyncActorsWithMovie(movie.Id, selectedActors);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CinemaId"] = new SelectList(await unitOfWork.Cinemas.GetAllAsync(null), "Id", "Name", movie.CinemaId);
@@ -100,8 +102,12 @@ namespace ECommerce.Controllers
             {
                 return NotFound();
             }
-            ViewData["CinemaId"] = new SelectList(await unitOfWork.Cinemas.GetAllAsync(null), "Id", "Name", movie.CinemaId);
-            ViewData["ProducerId"] = new SelectList(await unitOfWork.Producers.GetAllAsync(null), "Id", "FullName", movie.ProducerId);
+            ViewBag.CinemaId = new SelectList(await unitOfWork.Cinemas.GetAllAsync(null), "Id", "Name", movie.CinemaId);
+            ViewBag.ProducerId = new SelectList(await unitOfWork.Producers.GetAllAsync(null), "Id", "FullName", movie.ProducerId);
+            ViewData["Actors"] = await unitOfWork.Actors.GetAllAsync(null);
+
+            ViewData["FilterActorData"] = await unitOfWork.ActorMoviess.GetAllAsyncActorsWithMovie(i => i.MovieId == id, new[] { "Actor" });
+
             return View(movie);
         }
 
@@ -109,7 +115,7 @@ namespace ECommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,StartDate,EndDate,Price,MovieCategory,CinemaId,ProducerId")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,StartDate,EndDate,Price,MovieCategory,CinemaId,ProducerId")] Movie movie, int[]? selectedActors)
         {
             if (id != movie.Id)
             {
@@ -118,7 +124,8 @@ namespace ECommerce.Controllers
 
             if (ModelState.IsValid)
             {
-               await unitOfWork.Movies.UpdateAsync(id, movie);
+                await unitOfWork.Movies.UpdateAsync(id, movie);
+                await unitOfWork.Movies.UpdateAsyncActorsWithMovie(id, selectedActors);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CinemaId"] = new SelectList(await unitOfWork.Cinemas.GetAllAsync(null), "Id", "Name", movie.CinemaId);

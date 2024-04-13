@@ -9,7 +9,11 @@ namespace ECommerce.RepositoryServices
         Task<T> GetByIdAsyncWInclud(Expression<Func<T,bool>>match, string[] includs);
         Task<IEnumerable<T>> GetAllAsync(string[] includeRelated);
         Task AddAsync(T item);
+        Task AddAsyncActorsWithMovie(int movieId, int[]actorsId);
+        Task UpdateAsyncActorsWithMovie(int moveId, int[] actorsId);
         Task UpdateAsync(int id, T item);
         Task DeleteByIdAsync(int id);
+        Task<IEnumerable<T>> GetAllAsyncActorsWithMovie(Expression<Func<T,bool>>match,string[] includeRelated);
+
     }
 }

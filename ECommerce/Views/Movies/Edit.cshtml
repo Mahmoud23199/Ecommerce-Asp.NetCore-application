@@ -3,13 +3,15 @@
 
 @{
     ViewData["Title"] = "Create";
+    var actors = ViewData["Actors"] as List<Actor>;
+    var FilterActorData = ViewData["FilterActorData"] as List<ActorMovies>;
 }
 
 
 <div class="container">
-    <h3>Create Movie</h3>
+    <h3>Update Movie</h3>
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group text-center">
                 <img id="profilepictureURLId" style="width:390px;height:250px; display: none;" />
             </div>
@@ -25,39 +27,72 @@
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-group" style="width:48%">
                     <label asp-for="ImageUrl" class="control-label"></label>
                     <input asp-for="ImageUrl" class="form-control" />
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                   </div>
+                    <div class="form-group" style="width:48%">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
+
+                <div class="d-flex justify-content-between mb-3">
+
+                  <div class="form-group" style="width:48%">
                     <label asp-for="StartDate" class="control-label"></label>
                     <input asp-for="StartDate" class="form-control" />
                     <span asp-validation-for="StartDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+                 </div>
+
+                  <div class="form-group" style="width:48%">
                     <label asp-for="EndDate" class="control-label"></label>
                     <input asp-for="EndDate" class="form-control" />
                     <span asp-validation-for="EndDate" class="text-danger"></span>
+                  </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+                <div class="d-flex justify-content-between mb-3">
+
+                   <div class="form-group" style="width:48%">
                     <label asp-for="MovieCategory" class="control-label"></label>
                     <select asp-for="MovieCategory" class="form-control" asp-items="@Html.GetEnumSelectList<MovieCategory>()"></select>
                     <span asp-validation-for="MovieCategory" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+                  </div>
+                  <div class="form-group" style="width:48%">
                     <label  class="control-label">Cinema Name</label>
                     <select asp-for="CinemaId" class="form-control" asp-items="ViewBag.CinemaId"></select>
+                  </div>
                 </div>
-                <div class="form-group">
+                <div class="d-flex justify-content-between mb-3">
+
+                   <div class="form-group" style="width:48%">
                     <label class="control-label">Producer Name</label>
                     <select asp-for="ProducerId" class="form-control" asp-items="ViewBag.ProducerId"></select>
+                  </div>
+
+
+                    <div class="form-group" style="width:48%; max-height:80px; overflow:auto">
+                        <label class="control-label">Select Actors</label>
+
+                        @foreach (var actor in actors)
+                        {
+                            bool isChecked = FilterActorData.Any(checkedId => checkedId.ActorId == actor.Id);
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="@actor.Id" name="selectedActors" id="actor_@actor.Id" @(isChecked ? "checked" : "") required>
+                                <label class="form-check-label" for="actor_@actor.Id">
+                                    @actor.FullName
+                                </label>
+                            </div>
+                        }
+                    </div>
+
+
                 </div>
+
                 <div class="d-flex" style="justify-content:space-between;align-items:center">
                     <div class="form-group mt-3">
                         <input type="submit"  value="UPdate" class="btn btn-warning" />

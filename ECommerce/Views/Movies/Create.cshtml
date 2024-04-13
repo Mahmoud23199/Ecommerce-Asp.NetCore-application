@@ -4,65 +4,99 @@
 @{
     ViewData["Title"] = "Create";
 }
-
+@{
+    var actors = ViewData["Actors"] as List<Actor>;
+}
 
 <div class="container">
     <h3>Create Movie</h3>
-    <div class="row justify-content-center">
-        <div class="col-md-4">
+    <div class="row justify-content-center ">
+        <div class="col-md-7 rounded-2 border-1 " style=" border:2px solid gray; box-shadow:0px 0px 10px gray;">
             <div class="form-group text-center">
-                <img id="profilepictureURLId" style="width:390px;height:250px; display: none;" />
+                <img id="profilepictureURLId" class="mt-2" style="width:390px;height:250px; display: none;" />
             </div>
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
+                <div class="form-group mb-3 mt-2">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-group" style="width:48%">
+                        <label asp-for="ImageUrl" class="control-label"></label>
+                        <input asp-for="ImageUrl" class="form-control" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="width:48%">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input type="number" asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+               
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-group " style="width:48%">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group " style="width:48%">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-group " style="width:48%">
+                        <label asp-for="MovieCategory" class="control-label"></label>
+                        <select asp-for="MovieCategory" class="form-control" asp-items="@Html.GetEnumSelectList<MovieCategory>()"></select>
+                        <span asp-validation-for="MovieCategory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group " style="width:48%">
+                        <label class="control-label">Cinema Name</label>
+                        <select asp-for="CinemaId" class="form-control" asp-items="ViewBag.CinemaId"></select>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-group" style="width:48%">
+                        <label class="control-label">Producer Name</label>
+                        <select asp-for="ProducerId" class="form-control" asp-items="ViewBag.ProducerId"></select>
+                    </div>
+
+                    <div class="form-group rounded-1" style="width:48%; max-height:80px;overflow:auto ;border:2px solid #E8E8E8;">
+                     <label class="control-label">Select Actors</label>
+
+                        @foreach (var actor in actors)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="@actor.Id" name="selectedActors" id="actor_@actor.Id" required>
+                                <label class="form-check-label" for="actor_@actor.Id">
+                                    @actor.FullName
+                                </label>
+                            </div>
+                        }
+
+                    </div>
+                 </div>
+
+                <div class="form-group mb-3">
                     <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
+                    <textarea asp-for="Description" class="form-control" style="width:100%; max-height:80px;"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ImageUrl" class="control-label"></label>
-                    <input asp-for="ImageUrl" class="form-control" />
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="StartDate" class="control-label"></label>
-                    <input asp-for="StartDate" class="form-control" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EndDate" class="control-label"></label>
-                    <input asp-for="EndDate" class="form-control" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MovieCategory" class="control-label"></label>
-                    <select asp-for="MovieCategory" class="form-control" asp-items="@Html.GetEnumSelectList<MovieCategory>()"></select>
-                    <span asp-validation-for="MovieCategory" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Cinema Name</label>
-                    <select asp-for="CinemaId" class="form-control" asp-items="ViewBag.CinemaId"></select>
-                </div>
-                <div class="form-group">
-                    <label  class="control-label">Producer Name</label>
-                    <select asp-for="ProducerId" class="form-control" asp-items="ViewBag.ProducerId"></select>
-                </div>
-                <div class="d-flex" style="justify-content:space-between;align-items:center">
+              
+
+                <div class="d-flex mb-3" style="justify-content:space-between;align-items:center">
                     <div class="form-group mt-3">
                         <input type="submit" value="Create" class="btn btn-primary" />
                     </div>
-                    <div class="form-group mt-3">
+                    <div class="form-group mt-3 ">
                         <a class="btn btn-success" asp-action="Index">Back to List</a>
                     </div>
                 </div>

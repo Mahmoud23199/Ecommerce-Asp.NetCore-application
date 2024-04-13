@@ -51,4 +51,6 @@
         <a asp-action="Create" asp-controller="Producers" class="btn btn-success text-white"><i class="fa-regular fa-plus"></i> Add New</a>
     </div>
 
+    @await Html.PartialAsync("_CreateItem", "Producers")
+
 </div>

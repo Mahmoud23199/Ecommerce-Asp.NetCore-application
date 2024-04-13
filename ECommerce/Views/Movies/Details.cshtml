@@ -3,75 +3,88 @@
 
 @{
     ViewData["Title"] = "Details";
+    var actorsData = ViewBag.Actors as List<ActorMovies>;
 }
 
 
 <div class="container">
-    <h3>Movie Details</h3>
     <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="form-group text-center">
-                <img id="profilepictureURLId" style="width:200px;height:200px; display: none; border-radius:50%" />
+        
+            <div class="col-md-8 col-xs-10 border-primary mb-3 mt-3">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-header text-white bg-info">
+                            <p class="card-text align-content-center" style="height:50px">
+                                    @Model.Name
+                                <a class="text-white float-end align-content-center" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        <img src="@Model.ImageUrl" style="width:80%;height:450px" alt="@Model.Name" />
+                        </div>
+
+                        <div class="col-md-6" >
+                        <div class="card-body">
+                            <p class="card-text" style="height:20px;overflow:hidden">@Model.Description</p>
+                            <p class="card-text"><b>Cinema: </b>@Model.Cinema.Name</p>
+                            <p class="card-text"><b>Category: </b>@Model.MovieCategory</p>
+                            <p class="card-text"><b>start Date: </b>@Model.StartDate.ToString("d")</p>
+                            <p class="card-text"><b>End Date: </b>@Model.EndDate.ToString("d")</p>
+                            <p class="card-text"><b>Producer: </b>@Model.Producer.FullName</p>
+
+                                <p class="card-text">
+                                    <b>Status:</b>
+                                @if (DateTime.Now >= Model.StartDate && DateTime.Now <= Model.EndDate)
+                                    {
+                                        <span class="badge bg-success text-white">AVAILABLE</span>
+                                    }
+                                else if (DateTime.Now < Model.StartDate)
+                                    {
+                                        <span class="badge bg-primary text-white">UPCOMING</span>
+                                    }
+                                else if (DateTime.Now > Model.EndDate)
+                                    {
+                                        <span class="badge bg-danger text-white">Finished</span>
+                                    }
+                                </p>
+                            <p class="card-text"><b>Actors:</b></p>
+                            <div class="align-middle d-flex" style="overflow:auto">
+                                @foreach (var actor in actorsData)
+                                {
+                                    <div class="text-center">
+                                        <img src="@actor.Actor.profilepictureURL" class="img-fluid rounded-circle ps-1" style="max-width: 100px; height: 100px;" alt="Profile Picture">
+                                        <p style="color:green"> @actor.Actor.FullName</p>
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-footer">
+                                <p class="card-text d-flex flex-nowrap" style="justify-content:space-between;align-items:center">
+                                <a class="btn btn-success text-white"><i class="bi bi-cart-plus"></i>Add to Cart ($@Model.Price)</a>
+                                <a asp-action="Index"  class="btn btn-outline-primary float-end"><i class="bi bi-back"></i> Back to List</a>
+
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" readonly />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" readonly />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ImageUrl" class="control-label"></label>
-                    <input asp-for="ImageUrl" class="form-control" readonly />
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="StartDate" class="control-label"></label>
-                    <input asp-for="StartDate" class="form-control" readonly />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EndDate" class="control-label"></label>
-                    <input asp-for="EndDate" class="form-control" readonly />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" readonly />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MovieCategory" class="control-label"></label>
-                    <input asp-for="MovieCategory" class="form-control" asp-items="@Model" readonly></input>
-                    <span asp-validation-for="MovieCategory" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Cinema Name</label>
-                    <input asp-for="Cinema.Name" class="form-control"  readonly></input>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Producer Name</label>
-                    <input asp-for="@Model.Producer.FullName" class="form-control"  readonly></input>
-                </div>
-                <div class="d-flex" style="justify-content:space-between;align-items:center">
-                    <div class="form-group mt-3">
-                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-                    </div>
-                    <div class="form-group mt-3">
-                        <a class="btn btn-success" asp-action="Index">Back to List</a>
-                    </div>
-                </div>
 
-            </form>
-        </div>
+        
+
     </div>
-
+   
 </div>
+
 @section Scripts {
     <script>
         $(document).ready(function () {

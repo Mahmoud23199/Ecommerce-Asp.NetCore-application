@@ -9,6 +9,8 @@ namespace ECommerce.UnitOfWork
         IgenericRepository<Cinema> Cinemas { get; }
         IgenericRepository<Movie> Movies { get; }
         IgenericRepository<Producer> Producers { get; }
+        IgenericRepository<ActorMovies> ActorMoviess { get; }
+
 
         int Complete();
     }

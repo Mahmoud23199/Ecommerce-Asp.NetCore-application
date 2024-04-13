@@ -14,6 +14,9 @@ namespace ECommerce.UnitOfWork
         public IgenericRepository<Movie> Movies { get; private set; }
 
         public IgenericRepository<Producer> Producers { get; private set; }
+        
+        public IgenericRepository<ActorMovies> ActorMoviess { get; private set; }
+
 
         public UnitOfWorkClass(EcommerceContext context)
         {
@@ -22,7 +25,7 @@ namespace ECommerce.UnitOfWork
             Cinemas = new genericRepository<Cinema>(context);
             Movies = new genericRepository<Movie>(context);
             Producers = new genericRepository<Producer>(context);
-
+            ActorMoviess = new genericRepository<ActorMovies>(context);
         }
 
         public int Complete()

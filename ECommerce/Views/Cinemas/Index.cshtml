@@ -39,8 +39,7 @@
 
     </div>
 
-    <div style="position:fixed;right:10px;bottom:10px;">
-        <a asp-action="Create" asp-controller="Cinemas" class="btn btn-success text-white"><i class="fa-regular fa-plus"></i> Add New</a>
-    </div>
+ 
+    @await Html.PartialAsync("_CreateItem", "Cinemas")
 
 </div>
