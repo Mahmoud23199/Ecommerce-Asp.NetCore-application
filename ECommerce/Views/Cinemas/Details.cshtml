@@ -1,0 +1,64 @@
+﻿@model ECommerce.Models.Cinema
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Cinema Details</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-3 text-center">
+                <img id="profilepictureURLId" style="width:390px;height:250px; display: none;" />
+            </div>
+            <div class="form-group mt-1">
+                <label asp-for="Logo" class="control-label"></label>
+                <input asp-for="Logo" id="Logo" class="form-control" readonly />
+                <span asp-validation-for="Logo" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" readonly />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" readonly />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <div class="form-group">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a>
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-primary" >Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Function to show image if URL is set
+        function showImageIfURLSet() {
+            var imageUrl = $("#Logo").val();
+            if (imageUrl) {
+                $("#profilepictureURLId").attr("src", imageUrl).show();
+            } else {
+                $("#profilepictureURLId").hide();
+            }
+        }
+
+        // Call the function on page load
+        $(document).ready(function () {
+            showImageIfURLSet();
+        });
+
+        // Bind change event to the input field
+        $("#Logo").on("change", showImageIfURLSet);
+    </script>
+}
+

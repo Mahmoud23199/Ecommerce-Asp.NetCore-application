@@ -1,0 +1,60 @@
+﻿
+@model ECommerce.Models.Actor
+
+@{
+    ViewData["Title"] = "Add new actor";
+}
+
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h1>Add a New Actor</h1>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mt-3 text-center">
+                    <img id="profilepictureURLId" style="width:390px;height:250px; display: none;" />
+                </div>
+                <div class="form-group mt-1">
+                    <label asp-for="profilepictureURL" class="control-label"></label>
+                    <input asp-for="profilepictureURL" id="profilepictureURL" class="form-control" />
+                    <span asp-validation-for="profilepictureURL" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="FullName" class="control-label"></label>
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Bio" class="control-label"></label>
+                    <input asp-for="Bio" class="form-control" />
+                    <span asp-validation-for="Bio" class="text-danger"></span>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-success" />
+                    </div>
+                    <div>
+                        <a class="btn btn-outline-secondary" asp-action="Index"> Show All</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#profilepictureURL").on("change", function () {
+            var imageUrl = $(this).val();
+            if (imageUrl) {
+                $("#profilepictureURLId").attr("src", imageUrl).show();
+            } else {
+                $("#profilepictureURLId").hide();
+            }
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

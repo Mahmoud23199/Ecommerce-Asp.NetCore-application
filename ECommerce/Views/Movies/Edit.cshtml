@@ -1,0 +1,90 @@
+﻿@using ECommerce.data
+@model ECommerce.Models.Movie
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="container">
+    <h3>Create Movie</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="form-group text-center">
+                <img id="profilepictureURLId" style="width:390px;height:250px; display: none;" />
+            </div>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MovieCategory" class="control-label"></label>
+                    <select asp-for="MovieCategory" class="form-control" asp-items="@Html.GetEnumSelectList<MovieCategory>()"></select>
+                    <span asp-validation-for="MovieCategory" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Cinema Name</label>
+                    <select asp-for="CinemaId" class="form-control" asp-items="ViewBag.CinemaId"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Producer Name</label>
+                    <select asp-for="ProducerId" class="form-control" asp-items="ViewBag.ProducerId"></select>
+                </div>
+                <div class="d-flex" style="justify-content:space-between;align-items:center">
+                    <div class="form-group mt-3">
+                        <input type="submit"  value="UPdate" class="btn btn-warning" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <a class="btn btn-success" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $("#ImageUrl").on("change", function () {
+            var imageUrl = $(this).val();
+            if (imageUrl) {
+                $("#profilepictureURLId").attr("src", imageUrl).show();
+            } else {
+                $("#profilepictureURLId").hide();
+            }
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
