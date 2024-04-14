@@ -10,6 +10,13 @@ namespace ECommerce.Models
         public DbSet<Producer> Producers { get; set; }
         public DbSet<ActorMovies>ActorMovies  { get; set; }
 
+        //order
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ShoppingCartItem> shoppingCartItems { get; set; }
+
+
+
         public EcommerceContext(DbContextOptions<EcommerceContext> options)
           : base(options)
         {

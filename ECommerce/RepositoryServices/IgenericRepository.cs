@@ -13,6 +13,7 @@ namespace ECommerce.RepositoryServices
         Task UpdateAsyncActorsWithMovie(int moveId, int[] actorsId);
         Task UpdateAsync(int id, T item);
         Task DeleteByIdAsync(int id);
+        Task<IEnumerable<T>> FilterByName(string name, string[] includs, Expression<Func<T, bool>> match);
         Task<IEnumerable<T>> GetAllAsyncActorsWithMovie(Expression<Func<T,bool>>match,string[] includeRelated);
 
     }

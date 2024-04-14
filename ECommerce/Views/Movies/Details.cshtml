@@ -66,7 +66,7 @@
                         <div class="col-md-12">
                             <div class="card-footer">
                                 <p class="card-text d-flex flex-nowrap" style="justify-content:space-between;align-items:center">
-                                <a class="btn btn-success text-white"><i class="bi bi-cart-plus"></i>Add to Cart ($@Model.Price)</a>
+                                <a class="btn btn-success text-white" asp-action="AddItemToCart" asp-controller="Orders" asp-route-id="@Model.Id"><i class="bi bi-cart-plus"></i>Add to Cart ($@Model.Price)</a>
                                 <a asp-action="Index"  class="btn btn-outline-primary float-end"><i class="bi bi-back"></i> Back to List</a>
 
                                 </p>

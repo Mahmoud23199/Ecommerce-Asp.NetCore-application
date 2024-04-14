@@ -152,6 +152,20 @@ namespace ECommerce.RepositoryServices
             await context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<T>> FilterByName(string name, string[] includs ,Expression<Func<T, bool>> match)
+        {
+            IQueryable<T> query = context.Set<T>();
+            if(includs != null) 
+            {
+                foreach (var includ in includs)
+                {
+                    query = query.Include(includ);
+
+                }
+            
+            }
+            return await query.Where(match).ToListAsync();
+        }
 
     }
 }

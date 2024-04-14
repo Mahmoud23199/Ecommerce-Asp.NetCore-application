@@ -3,6 +3,7 @@ using ECommerce.RepositoryServices;
 using Microsoft.AspNetCore.Mvc;
 using ECommerce.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using ECommerce.Data.Cart;
 
 namespace ECommerce
 {
@@ -21,6 +22,10 @@ namespace ECommerce
 
             builder.Services.AddScoped(typeof(IgenericRepository<>), typeof(genericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWorkClass>();
+            //shopcart
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped(sc=>ShoppingCart.GetShoppingCart(sc));
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -32,6 +37,7 @@ namespace ECommerce
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

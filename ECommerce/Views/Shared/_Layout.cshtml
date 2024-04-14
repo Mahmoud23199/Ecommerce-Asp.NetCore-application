@@ -40,10 +40,13 @@
                         </li>
                         
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" asp-controller="Movies" asp-action="Filter" type="search" placeholder="Search for Movie..." aria-label="Search">
+                    <form class="d-flex" role="search" asp-action="Filter" asp-controller="Movies">
+                        <input class="form-control me-2" id="searchInput" name="SearchData" type="text" placeholder="Search for Movie..." aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -64,4 +67,28 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                var searchData = $(this).val().trim();
+
+                $.ajax({
+                    url: '@Url.Action("Filter", "Movies")',
+                    method: 'GET',
+                    data: { searchData: searchData },
+                    success: function (data) {
+                        console.log('Filtered data:', data);
+                        $('.container').html(data); // Update the container with the filtered data
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
 </html>

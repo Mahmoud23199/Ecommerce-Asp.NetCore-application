@@ -30,6 +30,23 @@ namespace ECommerce.Controllers
             this.unitOfWork = unitOfWork;
 
         }
+        public async Task<IActionResult> Filter(string searchData)
+        {
+            var includeRelated = new string[] { "Cinema", "Producer" };
+
+            if (string.IsNullOrEmpty(searchData))
+            {
+                var allMovies = await unitOfWork.Movies.GetAllAsync(includeRelated);
+                return View("Index", allMovies);
+            }
+
+            var filteredMovies = await unitOfWork.Movies.FilterByName(searchData, includeRelated,
+                                     movie => movie.Name.Contains(searchData) ||
+                                              movie.Description.Contains(searchData));
+
+            return View("Index", filteredMovies);
+        }
+
         // GET: Movies
         public async Task<IActionResult> Index()
         {

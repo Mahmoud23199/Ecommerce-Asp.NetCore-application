@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<ECommerce.Models.Movie>
 
+<main>
 <div class="container">
     <div class="row justify-content-between">
         @foreach (var item in Model)
@@ -48,7 +49,7 @@
                             <div class="card-footer">
                                 <p class="card-text d-flex flex-nowrap" style="justify-content:space-between;align-items:center">
                                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary float-end"><i class="bi bi-eye-fill"></i>Show Details</a>
-                                    <a class="btn btn-success text-white"><i class="bi bi-cart-plus"></i>Add to Cart ($@item.Price)</a>
+                                        <a class="btn btn-success text-white" asp-action="AddItemToCart" asp-controller="Orders" asp-route-id="@item.Id"><i class="bi bi-cart-plus"></i>Add to Cart ($@item.Price)</a>
 
                                 </p>
                             </div>
@@ -65,4 +66,4 @@
     </div>
     @await Html.PartialAsync("_CreateItem", "Movies")
 </div>
-
+</main>
