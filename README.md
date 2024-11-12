@@ -3,7 +3,7 @@ A comprehensive web application built with ASP.NET Core that demonstrates modern
 Technologies Used
 
 Backend: C#, Entity Framework (EF) Core, ASP.NET Core MVC
-Frontend: HTML, CSS, JavaScript, Bootstrap
+Frontend: Razor Pages, HTML, CSS, JavaScript, Bootstrap
 Database: SQL Server
 Security: ASP.NET Core Identity
 Utilities: LINQ for data queries
