@@ -1,5 +1,3 @@
-A comprehensive web application built with ASP.NET Core that demonstrates modern web development practices and integrates features such as authentication, payment processing, and data management.
-
 Technologies Used
 
 Backend: C#, Entity Framework (EF) Core, ASP.NET Core MVC
